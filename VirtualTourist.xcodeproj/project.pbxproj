@@ -84,9 +84,6 @@
 				4C6185781B679D1A0017778A /* CoreDataStackManager.swift */,
 				4C6185551B6798410017778A /* AppDelegate.swift */,
 				4C61855A1B6798410017778A /* ViewController.swift */,
-				4C61855C1B6798410017778A /* Main.storyboard */,
-				4C61855F1B6798410017778A /* Images.xcassets */,
-				4C6185611B6798410017778A /* LaunchScreen.xib */,
 				4C6185571B6798410017778A /* VirtualTourist.xcdatamodeld */,
 				4C6185531B6798410017778A /* Supporting Files */,
 			);
@@ -96,6 +93,8 @@
 		4C6185531B6798410017778A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4C61855F1B6798410017778A /* Images.xcassets */,
+				4CDCC12E1B6D448B0096E995 /* Storyboards */,
 				4C6185541B6798410017778A /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -116,6 +115,15 @@
 				4C61856D1B6798420017778A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4CDCC12E1B6D448B0096E995 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				4C61855C1B6798410017778A /* Main.storyboard */,
+				4C6185611B6798410017778A /* LaunchScreen.xib */,
+			);
+			name = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

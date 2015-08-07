@@ -7,20 +7,48 @@
 //
 
 import UIKit
+import MapKit
 
 class TravelLocationsViewController: UIViewController {
+    
+    @IBOutlet weak var mapView: MKMapView!
 
+    let touchAndHoldGesture = UILongPressGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+        touchAndHoldGesture.addTarget(self, action: "mapTouchAndHold:")
+        mapView.addGestureRecognizer(touchAndHoldGesture)
+        
     }
     
+    func mapTouchAndHold(sender: UIGestureRecognizer) {
+        
+        switch(touchAndHoldGesture.state) {
+        // upon releasing the finger
+        case UIGestureRecognizerState.Ended:
+            
+            // convert touch point to coordinate
+            var point: CGPoint = sender.locationInView(mapView)
+            
+            var coordinate: CLLocationCoordinate2D = mapView.convertPoint(point,
+                toCoordinateFromView: mapView)
+            
+            // add annotation on the coordinate
+            var annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            
+            mapView.addAnnotation(annotation)
+            
+            break;
+            
+        default:
+            // do nothing
+            break;
+        }
+
+    }
 
     /*
     // MARK: - Navigation

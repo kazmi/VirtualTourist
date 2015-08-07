@@ -29,6 +29,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="5mA-Jx-0xy"/>
+                    <connections>
+                        <outlet property="mapView" destination="VXd-Lb-bck" id="ga0-ac-EaB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

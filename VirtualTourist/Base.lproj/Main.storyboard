@@ -19,17 +19,38 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VXd-Lb-bck">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Pins to Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYt-wr-sJW">
+                                <rect key="frame" x="0.0" y="600" width="600" height="54"/>
+                                <color key="backgroundColor" red="0.98431372549999996" green="0.0039215686269999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="Npw-bI-28z"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="VXd-Lb-bck" secondAttribute="bottom" id="8Qk-YN-XHM"/>
+                            <constraint firstItem="IYt-wr-sJW" firstAttribute="top" secondItem="VXd-Lb-bck" secondAttribute="bottom" id="S1j-Na-nsS"/>
                             <constraint firstAttribute="trailing" secondItem="VXd-Lb-bck" secondAttribute="trailing" id="W3w-4a-hTs"/>
+                            <constraint firstItem="IYt-wr-sJW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="aae-wM-fNj"/>
                             <constraint firstItem="VXd-Lb-bck" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="cSF-DC-JfQ"/>
                             <constraint firstItem="VXd-Lb-bck" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="cmE-BZ-Kos"/>
+                            <constraint firstAttribute="trailing" secondItem="IYt-wr-sJW" secondAttribute="trailing" id="mrg-K3-fh1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Virtual Tourist" id="5mA-Jx-0xy"/>
+                    <navigationItem key="navigationItem" title="Virtual Tourist" id="5mA-Jx-0xy">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="fbP-nB-Xhs">
+                            <connections>
+                                <action selector="toggleEditMode:" destination="vXZ-lx-hvc" id="VaI-v9-2Gq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="fbP-nB-Xhs" id="sv3-e9-GVZ"/>
+                        <outlet property="editLabel" destination="IYt-wr-sJW" id="diE-0Z-EQn"/>
                         <outlet property="mapView" destination="VXd-Lb-bck" id="ga0-ac-EaB"/>
                     </connections>
                 </viewController>

@@ -93,6 +93,8 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     // MARK: - Map View Delegate
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+
+        mapView.deselectAnnotation(view.annotation, animated: true)
         
         if editMode == true {
             
@@ -108,9 +110,11 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
             mapView.removeAnnotation(view.annotation)
             annotations.removeAtIndex(index)
             
+        } else {
+            
+            performSegueWithIdentifier("showPhotoAlbum", sender: nil)
+            
         }
-        
-        mapView.deselectAnnotation(view.annotation, animated: true)
 
     }
     

@@ -52,11 +52,55 @@
                         <outlet property="editButton" destination="fbP-nB-Xhs" id="sv3-e9-GVZ"/>
                         <outlet property="editLabel" destination="IYt-wr-sJW" id="diE-0Z-EQn"/>
                         <outlet property="mapView" destination="VXd-Lb-bck" id="ga0-ac-EaB"/>
+                        <segue destination="eYP-UD-yiw" kind="show" identifier="showPhotoAlbum" id="Ug3-Hn-mH1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1321" y="-306"/>
+        </scene>
+        <!--Photo Album View Controller-->
+        <scene sceneID="iTd-JA-dfM">
+            <objects>
+                <viewController id="eYP-UD-yiw" customClass="PhotoAlbumViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wI3-Yx-pW8"/>
+                        <viewControllerLayoutGuide type="bottom" id="ULa-m8-io4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mCh-Gh-uNf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oWN-WG-eJV">
+                                <rect key="frame" x="0.0" y="64" width="600" height="118"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="118" id="dYR-Ok-P3N"/>
+                                </constraints>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Images" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2en-Ya-NtS">
+                                <rect key="frame" x="259" y="290" width="83" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oWN-WG-eJV" firstAttribute="leading" secondItem="mCh-Gh-uNf" secondAttribute="leading" id="Ak2-gW-lmR"/>
+                            <constraint firstAttribute="centerY" secondItem="2en-Ya-NtS" secondAttribute="centerY" id="EzS-ye-oIo"/>
+                            <constraint firstAttribute="centerX" secondItem="2en-Ya-NtS" secondAttribute="centerX" constant="-0.5" id="XVD-Rf-C0l"/>
+                            <constraint firstAttribute="trailing" secondItem="oWN-WG-eJV" secondAttribute="trailing" id="eTr-97-2ZQ"/>
+                            <constraint firstItem="oWN-WG-eJV" firstAttribute="top" secondItem="wI3-Yx-pW8" secondAttribute="bottom" id="gcU-7h-e7n"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emptyLabel" destination="2en-Ya-NtS" id="bqR-fA-xIb"/>
+                        <outlet property="mapView" destination="oWN-WG-eJV" id="xhg-Gw-qeH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="phs-sH-NnE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2168" y="-306"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IMq-rS-Ms6">

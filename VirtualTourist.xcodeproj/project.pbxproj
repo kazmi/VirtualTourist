@@ -15,6 +15,8 @@
 		4C61856F1B6798420017778A /* VirtualTouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C61856E1B6798420017778A /* VirtualTouristTests.swift */; };
 		4C6185791B679D1A0017778A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6185781B679D1A0017778A /* CoreDataStackManager.swift */; };
 		4CBEF93D1B77DB1E004C513B /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEF93C1B77DB1E004C513B /* PhotoAlbumViewController.swift */; };
+		4CBEF9451B783417004C513B /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEF9441B783417004C513B /* Pin.swift */; };
+		4CBEF9471B783760004C513B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEF9461B783760004C513B /* Photo.swift */; };
 		4CDCC1301B6D455C0096E995 /* TravelLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDCC12F1B6D455C0096E995 /* TravelLocationsViewController.swift */; };
 		4CF154DC1B750E2400213E6C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF154DB1B750E2400213E6C /* MapKit.framework */; };
 /* End PBXBuildFile section */
@@ -42,6 +44,9 @@
 		4C61856E1B6798420017778A /* VirtualTouristTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristTests.swift; sourceTree = "<group>"; };
 		4C6185781B679D1A0017778A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		4CBEF93C1B77DB1E004C513B /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
+		4CBEF9441B783417004C513B /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		4CBEF9461B783760004C513B /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		4CBEF9481B783C49004C513B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4CDCC12F1B6D455C0096E995 /* TravelLocationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelLocationsViewController.swift; sourceTree = "<group>"; };
 		4CF154DB1B750E2400213E6C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -68,6 +73,7 @@
 		4C6185471B6798410017778A = {
 			isa = PBXGroup;
 			children = (
+				4CBEF9481B783C49004C513B /* CoreData.framework */,
 				4CF154DB1B750E2400213E6C /* MapKit.framework */,
 				4C6185521B6798410017778A /* VirtualTourist */,
 				4C61856B1B6798420017778A /* VirtualTouristTests */,
@@ -92,7 +98,6 @@
 				4CDCC1311B6D45690096E995 /* Controller */,
 				4C6185781B679D1A0017778A /* CoreDataStackManager.swift */,
 				4C6185551B6798410017778A /* AppDelegate.swift */,
-				4C6185571B6798410017778A /* VirtualTourist.xcdatamodeld */,
 				4C6185531B6798410017778A /* Supporting Files */,
 			);
 			path = VirtualTourist;
@@ -153,6 +158,10 @@
 		4CDCC1331B6D458B0096E995 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4C6185571B6798410017778A /* VirtualTourist.xcdatamodeld */,
+				4CBEF9441B783417004C513B /* Pin.swift */,
+				4CBEF9461B783760004C513B /* Photo.swift */,
+				4CBEF9411B781D5C004C513B /* Clients */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -260,6 +269,8 @@
 				4C6185791B679D1A0017778A /* CoreDataStackManager.swift in Sources */,
 				4C6185591B6798410017778A /* VirtualTourist.xcdatamodeld in Sources */,
 				4C6185561B6798410017778A /* AppDelegate.swift in Sources */,
+				4CBEF9471B783760004C513B /* Photo.swift in Sources */,
+				4CBEF9451B783417004C513B /* Pin.swift in Sources */,
 				4CBEF93D1B77DB1E004C513B /* PhotoAlbumViewController.swift in Sources */,
 				4CDCC1301B6D455C0096E995 /* TravelLocationsViewController.swift in Sources */,
 			);

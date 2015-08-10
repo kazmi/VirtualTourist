@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
@@ -16,6 +17,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var editLabel: UILabel!
     
     var annotations: [MKPointAnnotation] = [MKPointAnnotation]()
+    var pins: [Pin] = [Pin]()
 
     let touchAndHoldGesture = UILongPressGestureRecognizer()
     
@@ -27,6 +29,21 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         touchAndHoldGesture.addTarget(self, action: "mapTouchAndHold:")
         mapView.addGestureRecognizer(touchAndHoldGesture)
         mapView.delegate = self
+        
+        pins = fetchAllPins()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        annotations.removeAll(keepCapacity: true)
+        
+        for pin in pins {
+            var annotation = MKPointAnnotation()
+            annotation.coordinate.latitude = pin.latitude
+            annotation.coordinate.longitude = pin.longitude
+            annotations.append(annotation)
+            mapView.addAnnotation(annotation)
+        }
         
     }
     
@@ -44,12 +61,21 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
                 var coordinate: CLLocationCoordinate2D = mapView.convertPoint(point,
                     toCoordinateFromView: mapView)
                 
-                // add annotation on the coordinate
+                // add annotation on the coordinate and persist it
                 var annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
             
+                let dictionary: [String : AnyObject] = [
+                    Pin.Keys.Latitude : coordinate.latitude,
+                    Pin.Keys.Longitude : coordinate.longitude
+                ]
+                
+                let pinToBeAdded = Pin(dictionary: dictionary, context: sharedContext)
+                
+                self.pins.append(pinToBeAdded)
                 annotations.append(annotation)
                 mapView.addAnnotation(annotation)
+                CoreDataStackManager.sharedInstance().saveContext()
             
                 break;
             
@@ -110,6 +136,11 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
             mapView.removeAnnotation(view.annotation)
             annotations.removeAtIndex(index)
             
+            // Remove the actor from the context
+            let pin = pins[index]
+            sharedContext.deleteObject(pin)
+            CoreDataStackManager.sharedInstance().saveContext()
+            
         } else {
             
             performSegueWithIdentifier("showPhotoAlbum", sender: nil)
@@ -117,6 +148,32 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         }
 
     }
+    
+    // MARK: - Core Data Convenience. This will be useful for fetching. And for adding and saving objects as well.
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
+    
+    func fetchAllPins() -> [Pin] {
+        
+        let error: NSErrorPointer = nil
+        
+        // Create the Fetch Request
+        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        
+        // Execute the Fetch Request
+        let results = sharedContext.executeFetchRequest(fetchRequest, error: error)
+        
+        // Check for Errors
+        if error != nil {
+            println("Error in fectchAllActors(): \(error)")
+        }
+        
+        return results as! [Pin]
+        
+    }
+
     
     /*
     // MARK: - Navigation

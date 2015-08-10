@@ -32,9 +32,6 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         
         pins = fetchAllPins()
         
-    }
-    
-    override func viewWillAppear(animated: Bool) {
         annotations.removeAll(keepCapacity: true)
         
         for pin in pins {
@@ -144,7 +141,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
             
         } else {
             
-            performSegueWithIdentifier("showPhotoAlbum", sender: nil)
+            performSegueWithIdentifier("showPhotoAlbum", sender: pins[index])
             
         }
 
@@ -176,14 +173,13 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     }
 
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        // Pass the pin object to the photo album view controller.
+        let destination = segue.destinationViewController as! PhotoAlbumViewController
+        destination.pin = sender as! Pin
     }
-    */
 
 }

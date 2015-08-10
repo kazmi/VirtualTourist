@@ -122,23 +122,24 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
 
         mapView.deselectAnnotation(view.annotation, animated: true)
         
+        var index : Int = 0
+        for annotation in annotations {
+            if annotation == view.annotation as! MKPointAnnotation {
+                break;
+            } else {
+                index++
+            }
+        }
+        
         if editMode == true {
             
-            var index : Int = 0
-            for annotation in annotations {
-                if annotation == view.annotation as! MKPointAnnotation {
-                    break;
-                } else {
-                    index++
-                }
-            }
-        
             mapView.removeAnnotation(view.annotation)
             annotations.removeAtIndex(index)
             
             // Remove the actor from the context
             let pin = pins[index]
             sharedContext.deleteObject(pin)
+            pins.removeAtIndex(index)
             CoreDataStackManager.sharedInstance().saveContext()
             
         } else {

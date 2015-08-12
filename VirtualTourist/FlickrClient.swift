@@ -19,7 +19,7 @@ class FlickrClient {
     }
     
     func getPhotosWithCompletionHandler(latitude: Double, longitude: Double,
-        completionHandler: (parsedData: AnyObject!, error: NSError?) -> Void) {
+        completionHandler: (JSONResult: AnyObject!, error: NSError?) -> Void) {
             
             // Configure parameters
             let methodArguments = [
@@ -29,7 +29,8 @@ class FlickrClient {
                 "safe_search": Constants.SAFE_SEARCH,
                 "extras": Constants.EXTRAS,
                 "format": Constants.DATA_FORMAT,
-                "nojsoncallback": Constants.NO_JSON_CALLBACK
+                "nojsoncallback": Constants.NO_JSON_CALLBACK,
+                "per_page": "10"
             ]
         
             // Buil the URL
@@ -44,16 +45,16 @@ class FlickrClient {
             let task = session.dataTaskWithRequest(request) {data, response, downloadError in
 
                 if let error = downloadError {
-                    completionHandler(parsedData: nil, error: error)
+                    completionHandler(JSONResult: nil, error: error)
                 } else {
                     
                     var parsingError: NSError? = nil
                     let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as! NSDictionary
                     
                     if let error = parsingError {
-                        completionHandler(parsedData: nil, error: error)
+                        completionHandler(JSONResult: nil, error: error)
                     } else {
-                        completionHandler(parsedData: parsedResult, error: nil)
+                        completionHandler(JSONResult: parsedResult, error: nil)
                     }
                     
                 }
@@ -63,8 +64,36 @@ class FlickrClient {
             task.resume()
     }
     
+    func taskForImage(imageURL: String, completionHandler: (imageData: NSData?, error: NSError?) ->  Void) -> NSURLSessionTask {
+        
+        let url = NSURL(string: imageURL)
+
+        let request = NSURLRequest(URL: url!)
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {data, response, downloadError in
+            
+            if let error = downloadError {
+                completionHandler(imageData: nil, error: error)
+            } else {
+                completionHandler(imageData: data, error: nil)
+            }
+        }
+        
+        task.resume()
+        
+        return task
+    }
+    
 
     // MARK: - Helper Methods
+    
+    class func photoFileURL(photoID: String) ->  NSURL {
+        let photoFilename = "\(photoID).jpg"
+        let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        let pathArray = [dirPath, photoFilename]
+        let fileURL =  NSURL.fileURLWithPathComponents(pathArray)!
+        return fileURL
+    }
     
     /* create bounding pox parameter string */
     func createBoundingBoxString(latitude: Double, longitude: Double) -> String {

@@ -19,6 +19,7 @@
 		4CBEF9431B7822C6004C513B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEF9421B7822C6004C513B /* Constants.swift */; };
 		4CBEF9451B783417004C513B /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEF9441B783417004C513B /* Pin.swift */; };
 		4CBEF9471B783760004C513B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEF9461B783760004C513B /* Photo.swift */; };
+		4CBEF94B1B7A645D004C513B /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBEF94A1B7A645D004C513B /* PhotoCollectionViewCell.swift */; };
 		4CDCC1301B6D455C0096E995 /* TravelLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDCC12F1B6D455C0096E995 /* TravelLocationsViewController.swift */; };
 		4CF154DC1B750E2400213E6C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF154DB1B750E2400213E6C /* MapKit.framework */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		4CBEF9441B783417004C513B /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		4CBEF9461B783760004C513B /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		4CBEF9481B783C49004C513B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4CBEF94A1B7A645D004C513B /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		4CDCC12F1B6D455C0096E995 /* TravelLocationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelLocationsViewController.swift; sourceTree = "<group>"; };
 		4CF154DB1B750E2400213E6C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -172,6 +174,7 @@
 		4CDCC1321B6D45840096E995 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4CBEF94A1B7A645D004C513B /* PhotoCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C6185791B679D1A0017778A /* CoreDataStackManager.swift in Sources */,
+				4CBEF94B1B7A645D004C513B /* PhotoCollectionViewCell.swift in Sources */,
 				4C6185591B6798410017778A /* VirtualTourist.xcdatamodeld in Sources */,
 				4C6185561B6798410017778A /* AppDelegate.swift in Sources */,
 				4CBEF9471B783760004C513B /* Photo.swift in Sources */,

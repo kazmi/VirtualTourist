@@ -25,7 +25,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
     
-    var selectedIndexes = [NSIndexPath]()
+//    var selectedIndexes = [NSIndexPath]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,18 +94,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         }
     }
     
-    // MARK: - Configure Cell
-    
-    func configureCell(cell: PhotoCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
-        
-        if let index = find(selectedIndexes, indexPath) {
-            cell.photoImageView.alpha = 0.25
-        } else {
-            cell.photoImageView.alpha = 1.0
-        }
-        
-    }
-    
     // MARK: - UICollectionView
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -169,8 +157,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
             cell.taskToCancelifCellIsReused = task
         }
         
-        configureCell(cell, atIndexPath: indexPath)
-        
         return cell
     }
     
@@ -178,18 +164,9 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PhotoCollectionViewCell
         
-        // Whenever a cell is tapped we will toggle its presence in the selectedIndexes array
-        if let index = find(selectedIndexes, indexPath) {
-            selectedIndexes.removeAtIndex(index)
-        } else {
-            selectedIndexes.append(indexPath)
-        }
+        let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        sharedContext.deleteObject(photo)
         
-        // Then reconfigure the cell
-        configureCell(cell, atIndexPath: indexPath)
-        
-        // And update the buttom button
-        updateBottomButton()
     }
     
     // MARK: - Core Data Convenience. This will be useful for fetching. And for adding and saving objects as well.
@@ -316,40 +293,10 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         }
     }
     
-    func deleteSelectedPhotos() {
-        var photosToDelete = [Photo]()
-        
-        for indexPath in selectedIndexes {
-            photosToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Photo)
-        }
-        
-        for photo in photosToDelete {
-            sharedContext.deleteObject(photo)
-        }
-        
-        selectedIndexes = [NSIndexPath]()
-        
-        updateBottomButton()
-    }
-    
-    func updateBottomButton() {
-        if selectedIndexes.count > 0 {
-            collectionActionButton.title = "Remove Selected Photos"
-        } else {
-            collectionActionButton.title = "New Collection"
-        }
-
-    }
-    
     @IBAction func bottomButtonAction(sender: AnyObject) {
         
-        if selectedIndexes.isEmpty {
-            deleteAllPhotos()
-            getNewCollection()
-        } else {
-            deleteSelectedPhotos()
-        }
-
+        deleteAllPhotos()
+        getNewCollection()
         
     }
 

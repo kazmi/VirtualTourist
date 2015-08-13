@@ -118,16 +118,22 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cDv-mD-Y15">
                                                     <rect key="frame" x="0.0" y="1" width="50" height="49"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Yfu-L2-27X">
+                                                    <rect key="frame" x="8" y="8" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="Yfu-L2-27X" firstAttribute="leading" secondItem="82b-St-eI1" secondAttribute="leading" constant="8" id="7si-GI-zIC"/>
                                             <constraint firstItem="cDv-mD-Y15" firstAttribute="leading" secondItem="82b-St-eI1" secondAttribute="leading" id="FME-o9-zYl"/>
+                                            <constraint firstItem="Yfu-L2-27X" firstAttribute="top" secondItem="82b-St-eI1" secondAttribute="top" constant="8" id="YUZ-XF-KV9"/>
                                             <constraint firstAttribute="trailing" secondItem="cDv-mD-Y15" secondAttribute="trailing" id="ndQ-z8-wgS"/>
                                             <constraint firstAttribute="bottom" secondItem="cDv-mD-Y15" secondAttribute="bottom" id="vLU-zf-LDb"/>
                                             <constraint firstItem="cDv-mD-Y15" firstAttribute="top" secondItem="82b-St-eI1" secondAttribute="top" constant="1" id="xRZ-Gt-kg2"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="activityIndicator" destination="Yfu-L2-27X" id="iwU-Q9-vX6"/>
                                             <outlet property="photoImageView" destination="cDv-mD-Y15" id="UYk-Qb-Yts"/>
                                         </connections>
                                     </collectionViewCell>

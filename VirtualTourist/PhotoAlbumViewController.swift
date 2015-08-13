@@ -112,6 +112,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
             cell.photoImageView.image = UIImage(contentsOfFile: fileURL.path!)
         } else {
             cell.photoImageView.image = UIImage(named: "placeholder")
+            cell.activityIndicator.startAnimating()
+            cell.activityIndicator.hidden = false
             
             // Start the task that will eventually download the image
             let task = FlickrClient.sharedInstance().taskForImage(photo.imageURL!) { data, error in
@@ -132,6 +134,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                     // update the cell later, on the main thread
                     dispatch_async(dispatch_get_main_queue()) {
                         cell.photoImageView.image = image
+                        cell.activityIndicator.stopAnimating()
+                        cell.activityIndicator.hidden = true
                     }
                 }
             }

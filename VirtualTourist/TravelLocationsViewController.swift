@@ -23,6 +23,12 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
     var editMode: Bool = false
     
+    var mapRegionFilePath : String {
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        return url.URLByAppendingPathComponent("mapRegion").path!
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -40,6 +46,26 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
             annotation.coordinate.longitude = pin.longitude
             annotations.append(annotation)
             mapView.addAnnotation(annotation)
+        }
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let mapInfo = NSKeyedUnarchiver.unarchiveObjectWithFile(mapRegionFilePath) as? [String: AnyObject] {
+            
+            let latitude = mapInfo["latitude"] as? Double
+            let longitude = mapInfo["longitude"] as? Double
+            let center = CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
+            
+            let latitudeDelta = mapInfo["latitudeDelta"] as? Double
+            let longitudeDelta = mapInfo["longitudeDelta"] as? Double
+            let span = MKCoordinateSpan(latitudeDelta: latitudeDelta!, longitudeDelta: longitudeDelta!)
+            
+            let region = MKCoordinateRegion(center: center, span: span)
+            mapView.setCenterCoordinate(center, animated: true)
+            mapView.setRegion(region, animated: true)
         }
         
     }
@@ -207,6 +233,19 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
 
     }
     
+    func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
+        
+        let mapInfo = [
+            "latitude": mapView.region.center.latitude,
+            "longitude": mapView.region.center.longitude,
+            "latitudeDelta": mapView.region.span.latitudeDelta,
+            "longitudeDelta": mapView.region.span.longitudeDelta
+        ]
+        
+        NSKeyedArchiver.archiveRootObject(mapInfo, toFile: mapRegionFilePath)
+        
+    }
+    
     // MARK: - Core Data Convenience. This will be useful for fetching. And for adding and saving objects as well.
     
     var sharedContext: NSManagedObjectContext {
@@ -231,7 +270,6 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         return results as! [Pin]
         
     }
-
     
     // MARK: - Navigation
 

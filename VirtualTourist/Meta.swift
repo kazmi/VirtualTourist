@@ -1,39 +1,35 @@
 //
-//  Pin.swift
+//  Meta.swift
 //  VirtualTourist
 //
-//  Created by Sulaiman Azhar on 8/10/15.
+//  Created by Sulaiman Azhar on 8/13/15.
 //  Copyright (c) 2015 kazmi. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-@objc(Pin)
+@objc(Meta)
 
-class Pin : NSManagedObject {
+class Meta : NSManagedObject {
     
     struct Keys {
-        static let Latitude = "latitude"
-        static let Longitude = "longitude"
+        static let TotalPages = "totalPages"
     }
     
-    @NSManaged var latitude: Double
-    @NSManaged var longitude: Double
-    @NSManaged var photos: [Photo]
-    @NSManaged var meta: Meta
+    @NSManaged var totalPages: NSNumber
+    @NSManaged var location: Pin?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entityForName("Meta", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
-        latitude = dictionary[Keys.Latitude] as! Double
-        longitude = dictionary[Keys.Longitude] as! Double
-
+        totalPages = dictionary[Keys.TotalPages] as! NSNumber
+        
     }
     
 }

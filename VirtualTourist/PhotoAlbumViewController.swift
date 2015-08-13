@@ -243,7 +243,26 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     
     func getNewCollection() {
         
-        FlickrClient.sharedInstance().getPhotosWithCompletionHandler(pin.latitude, longitude: pin.longitude) { (JSONResult, error) in
+        let fetchRequest = NSFetchRequest(entityName: "Meta")
+        let predicate = NSPredicate(format: "location == %@", self.pin)
+        fetchRequest.predicate = predicate
+        
+        let error: NSErrorPointer = nil
+        let result = sharedContext.executeFetchRequest(fetchRequest, error: error)?.first as? Meta
+        
+        if (error != nil) {
+            println("error getting meta")
+        }
+        
+        var randomPageVal: Int? = nil
+        if let _ = result {
+            let totalPagesVal = result!.totalPages
+            let randomPageVal = 1 + Int(arc4random_uniform(UInt32(totalPagesVal.intValue)))
+            println("loading page: \(randomPageVal) out of \(totalPagesVal)")
+        }
+        
+        FlickrClient.sharedInstance().getPhotosWithCompletionHandler(pin.latitude, longitude: pin.longitude,
+            page: randomPageVal) { (JSONResult, error) in
             
             if(error == nil) {
                 
@@ -252,6 +271,16 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                     var totalPhotosVal = 0
                     if let totalPhotos = photosDictionary["total"] as? String {
                         totalPhotosVal = (totalPhotos as NSString).integerValue
+                    }
+                    
+                    var totalPagesVal: NSNumber = 0
+                    if let totalPages: AnyObject = photosDictionary["pages"] {
+                        totalPagesVal = NSNumber(integer: (totalPages as! NSNumber).integerValue)
+                    }
+                    
+                    self.pin.meta.totalPages = totalPagesVal
+                    dispatch_async(dispatch_get_main_queue()) {
+                        CoreDataStackManager.sharedInstance().saveContext()    
                     }
                     
                     if totalPhotosVal > 0 {

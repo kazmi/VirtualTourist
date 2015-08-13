@@ -83,6 +83,22 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
                         totalPhotosVal = (totalPhotos as NSString).integerValue
                     }
                     
+                    var totalPagesVal: NSNumber = 0
+                    if let totalPages: AnyObject = photosDictionary["pages"] {
+                        println("saving total page val: \(totalPages)")
+                        totalPagesVal = NSNumber(integer: (totalPages as! NSNumber).integerValue)
+                    }
+                    
+                    let dictionary: [String : AnyObject] = [
+                        Meta.Keys.TotalPages : totalPagesVal
+                    ]
+                    
+                    let metaToBeAdded = Meta(dictionary: dictionary, context: self.sharedContext)
+                    metaToBeAdded.location = pin
+                    dispatch_async(dispatch_get_main_queue()) {
+                        CoreDataStackManager.sharedInstance().saveContext()
+                    }
+                    
                     if totalPhotosVal > 0 {
                         if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
                             for index in 0...photosArray.count-1 {
@@ -119,7 +135,9 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
                                 
                             }
                             
-                            CoreDataStackManager.sharedInstance().saveContext()
+                            dispatch_async(dispatch_get_main_queue()) {
+                                CoreDataStackManager.sharedInstance().saveContext()
+                            }
                             
                         }
                     }

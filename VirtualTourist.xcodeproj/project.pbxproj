@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C2CAB781B7CF7990040C218 /* Meta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2CAB771B7CF7990040C218 /* Meta.swift */; };
 		4C6185561B6798410017778A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6185551B6798410017778A /* AppDelegate.swift */; };
 		4C6185591B6798410017778A /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C6185571B6798410017778A /* VirtualTourist.xcdatamodeld */; };
 		4C61855E1B6798410017778A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C61855C1B6798410017778A /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C2CAB771B7CF7990040C218 /* Meta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meta.swift; sourceTree = "<group>"; };
 		4C6185501B6798410017778A /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6185541B6798410017778A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C6185551B6798410017778A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				4C6185571B6798410017778A /* VirtualTourist.xcdatamodeld */,
 				4CBEF9441B783417004C513B /* Pin.swift */,
 				4CBEF9461B783760004C513B /* Photo.swift */,
+				4C2CAB771B7CF7990040C218 /* Meta.swift */,
 				4CBEF9411B781D5C004C513B /* Clients */,
 			);
 			name = Model;
@@ -294,6 +297,7 @@
 				4CBEF94B1B7A645D004C513B /* PhotoCollectionViewCell.swift in Sources */,
 				4C6185591B6798410017778A /* VirtualTourist.xcdatamodeld in Sources */,
 				4C6185561B6798410017778A /* AppDelegate.swift in Sources */,
+				4C2CAB781B7CF7990040C218 /* Meta.swift in Sources */,
 				4CBEF9471B783760004C513B /* Photo.swift in Sources */,
 				4CBEF9451B783417004C513B /* Pin.swift in Sources */,
 				4CBEF93D1B77DB1E004C513B /* PhotoAlbumViewController.swift in Sources */,

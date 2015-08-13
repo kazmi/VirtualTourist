@@ -18,11 +18,11 @@ class FlickrClient {
         return Singleton.sharedInstance
     }
     
-    func getPhotosWithCompletionHandler(latitude: Double, longitude: Double,
+    func getPhotosWithCompletionHandler(latitude: Double, longitude: Double, page: Int? = nil,
         completionHandler: (JSONResult: AnyObject!, error: NSError?) -> Void) {
             
             // Configure parameters
-            let methodArguments = [
+            var methodArguments = [
                 "method": Constants.METHOD_NAME,
                 "api_key": Constants.API_KEY,
                 "bbox": createBoundingBoxString(latitude, longitude: longitude),
@@ -30,8 +30,12 @@ class FlickrClient {
                 "extras": Constants.EXTRAS,
                 "format": Constants.DATA_FORMAT,
                 "nojsoncallback": Constants.NO_JSON_CALLBACK,
-                "per_page": "10"
+                "per_page": Constants.PER_PAGE
             ]
+            
+            if let page = page {
+                methodArguments["page"] = "\(page)"
+            }
         
             // Buil the URL
             let urlString = Constants.BASE_URL + escapedParameters(methodArguments)

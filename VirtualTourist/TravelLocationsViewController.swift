@@ -44,6 +44,65 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    func prefetchPhotos(pin: Pin!) {
+        
+        FlickrClient.sharedInstance().getPhotosWithCompletionHandler(pin.latitude, longitude: pin.longitude) { (JSONResult, error) in
+            
+            if(error == nil) {
+                
+                if let photosDictionary = JSONResult.valueForKey("photos") as? [String:AnyObject] {
+                    
+                    var totalPhotosVal = 0
+                    if let totalPhotos = photosDictionary["total"] as? String {
+                        totalPhotosVal = (totalPhotos as NSString).integerValue
+                    }
+                    
+                    if totalPhotosVal > 0 {
+                        if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
+                            for index in 0...photosArray.count-1 {
+                                
+                                let photoDictionary = photosArray[index] as [String: AnyObject]
+                                
+                                let photoID = photoDictionary["id"] as? String
+                                let imageUrlString = photoDictionary["url_m"] as? String
+                                
+                                let dictionary: [String : AnyObject] = [
+                                    Photo.Keys.ID : photoID!,
+                                    Photo.Keys.ImageURL : imageUrlString!
+                                ]
+                                
+                                let photoToBeAdded = Photo(dictionary: dictionary, context: self.sharedContext)
+                                photoToBeAdded.location = pin
+                                
+                                let task = FlickrClient.sharedInstance().taskForImage(imageUrlString!) { data, error in
+                                    
+                                    if let error = error {
+                                        println("Poster download error: \(error.localizedDescription)")
+                                    }
+                                    
+                                    if let data = data {
+                                        
+                                        let fileURL = FlickrClient.photoFileURL(photoID!)
+                                        let image = UIImage(data: data)
+                                        let bytes = UIImageJPEGRepresentation(image, 1.0);
+                                        bytes.writeToFile(fileURL.path!, atomically: true)
+                                        println("pre-fetched \(photoID!).jpg")
+                                        
+                                    }
+                                }
+                                
+                            }
+                            
+                            CoreDataStackManager.sharedInstance().saveContext()
+                            
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    
     func mapTouchAndHold(sender: UIGestureRecognizer) {
         
         if (editMode == false) {
@@ -73,6 +132,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
                 annotations.append(annotation)
                 mapView.addAnnotation(annotation)
                 CoreDataStackManager.sharedInstance().saveContext()
+                prefetchPhotos(pinToBeAdded)
             
                 break;
             

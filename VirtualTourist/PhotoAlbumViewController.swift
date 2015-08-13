@@ -154,6 +154,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                     // Save to documents directory
                     let bytes = UIImageJPEGRepresentation(image, 1.0);
                     bytes.writeToFile(fileURL.path!, atomically: true)
+                    println("fetched \(photo.id!).jpg")
                     
                     // update the cell later, on the main thread
                     dispatch_async(dispatch_get_main_queue()) {

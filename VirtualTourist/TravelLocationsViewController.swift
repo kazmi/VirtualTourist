@@ -18,6 +18,8 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
     var annotations: [MKPointAnnotation] = [MKPointAnnotation]()
     var pins: [Pin] = [Pin]()
+    
+    var annotation : MKPointAnnotation!
 
     let touchAndHoldGesture = UILongPressGestureRecognizer()
     
@@ -150,38 +152,45 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     func mapTouchAndHold(sender: UIGestureRecognizer) {
         
         if (editMode == false) {
-        
+            
+            var point: CGPoint = sender.locationInView(mapView)
+            
+            // convert touch point to coordinate
+            var coordinate: CLLocationCoordinate2D = mapView.convertPoint(point,
+                toCoordinateFromView: mapView)
+            
             switch(touchAndHoldGesture.state) {
-                // upon releasing the finger
-            case UIGestureRecognizerState.Ended:
-            
-                // convert touch point to coordinate
-                var point: CGPoint = sender.locationInView(mapView)
                 
-                var coordinate: CLLocationCoordinate2D = mapView.convertPoint(point,
-                    toCoordinateFromView: mapView)
+            case UIGestureRecognizerState.Began:
                 
-                // add annotation on the coordinate and persist it
-                var annotation = MKPointAnnotation()
+                annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
-            
+                annotations.append(annotation)
+                mapView.addAnnotation(annotation)
+                
+                break;
+                
+            case UIGestureRecognizerState.Changed:
+                
+                annotation.coordinate = coordinate
+                
+                break;
+                
+            case UIGestureRecognizerState.Ended:
+                
                 let dictionary: [String : AnyObject] = [
                     Pin.Keys.Latitude : coordinate.latitude,
                     Pin.Keys.Longitude : coordinate.longitude
                 ]
                 
                 let pinToBeAdded = Pin(dictionary: dictionary, context: sharedContext)
-                
                 self.pins.append(pinToBeAdded)
-                annotations.append(annotation)
-                mapView.addAnnotation(annotation)
                 CoreDataStackManager.sharedInstance().saveContext()
                 prefetchPhotos(pinToBeAdded)
             
                 break;
             
             default:
-                // do nothing
                 break;
             }
             

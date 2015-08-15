@@ -166,6 +166,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         
         let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         sharedContext.deleteObject(photo)
+        CoreDataStackManager.sharedInstance().saveContext()
         
     }
     

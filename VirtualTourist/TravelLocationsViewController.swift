@@ -31,6 +31,8 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         return url.URLByAppendingPathComponent("mapRegion").path!
     }
     
+    var tasks: [NSURLSessionTask] = [NSURLSessionTask]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -131,6 +133,8 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
                                         println("pre-fetched \(photoID!).jpg")
                                     }
                                 }
+                                
+                                self.tasks.append(task)
                                 
                             }
                             
@@ -299,6 +303,12 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        // Cancel pre-fetching
+        for task in self.tasks {
+            task.cancel()
+        }
+        
         // Pass the pin object to the photo album view controller.
         let destination = segue.destinationViewController as! PhotoAlbumViewController
         destination.pin = sender as! Pin

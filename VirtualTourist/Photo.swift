@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 kazmi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 @objc(Photo)
@@ -36,24 +36,17 @@ class Photo: NSManagedObject {
     }
     
     override func prepareForDeletion() {
-        
-        let fileURL = FlickrClient.photoFileURL(id!)
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!) {
-            
-            var error: NSError? = nil
-            NSFileManager.defaultManager().removeItemAtURL(fileURL, error: &error)
-            
-            if (error != nil) {
-                println("error deleting file \(id!).jpg")
-            } else {
-                println("\(id!).jpg deleted")
-            }
-            
-        } else {
-            println("file \(id).jpg does not exist")
+        image = nil
+    }
+    
+    var image: UIImage? {
+        get {
+            return FlickrClient.Caches.imageCache.imageWithIdentifier("\(id!)")
         }
         
+        set {
+            FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: "\(id!)")
+        }
     }
     
 }

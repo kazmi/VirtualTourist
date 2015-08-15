@@ -118,10 +118,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         
         let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         
-        let fileURL = FlickrClient.photoFileURL(photo.id!)
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(fileURL.path!) == true {
-            cell.photoImageView.image = UIImage(contentsOfFile: fileURL.path!)
+        if let localImage = photo.image {
+            cell.photoImageView.image = localImage
         } else {
             cell.photoImageView.image = UIImage(named: "placeholder")
             cell.activityIndicator.startAnimating()
@@ -138,11 +136,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                     
                     // Create the image
                     let image = UIImage(data: data)
-                    
-                    // Save to documents directory
-                    let bytes = UIImageJPEGRepresentation(image, 1.0);
-                    bytes.writeToFile(fileURL.path!, atomically: true)
-                    println("fetched \(photo.id!).jpg")
+                    photo.image = image
                     
                     // update the cell later, on the main thread
                     dispatch_async(dispatch_get_main_queue()) {

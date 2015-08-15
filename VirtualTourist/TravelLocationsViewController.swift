@@ -125,13 +125,10 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
                                     }
                                     
                                     if let data = data {
-                                        
-                                        let fileURL = FlickrClient.photoFileURL(photoID!)
+                                     
                                         let image = UIImage(data: data)
-                                        let bytes = UIImageJPEGRepresentation(image, 1.0);
-                                        bytes.writeToFile(fileURL.path!, atomically: true)
+                                        photoToBeAdded.image = image
                                         println("pre-fetched \(photoID!).jpg")
-                                        
                                     }
                                 }
                                 

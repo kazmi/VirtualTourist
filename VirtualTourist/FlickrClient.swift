@@ -88,16 +88,13 @@ class FlickrClient {
         return task
     }
     
-
-    // MARK: - Helper Methods
+    // MARK: - Shared Image Cache
     
-    class func photoFileURL(photoID: String) ->  NSURL {
-        let photoFilename = "\(photoID).jpg"
-        let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        let pathArray = [dirPath, photoFilename]
-        let fileURL =  NSURL.fileURLWithPathComponents(pathArray)!
-        return fileURL
+    struct Caches {
+        static let imageCache = ImageCache()
     }
+    
+    // MARK: - Helper Methods
     
     /* create bounding pox parameter string */
     func createBoundingBoxString(latitude: Double, longitude: Double) -> String {

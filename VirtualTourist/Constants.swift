@@ -26,7 +26,7 @@ extension FlickrClient {
         static let LAT_MAX = 90.0
         static let LON_MIN = -180.0
         static let LON_MAX = 180.0
-        static let PER_PAGE = "20"
+        static let PER_PAGE = "12"
         
     }
 

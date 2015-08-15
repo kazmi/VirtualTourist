@@ -25,7 +25,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
     
-//    var selectedIndexes = [NSIndexPath]()
+    var canDeleteImages: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,6 +120,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         
         if let localImage = photo.image {
             cell.photoImageView.image = localImage
+            self.updateButtonStatus()
         } else {
             cell.photoImageView.image = UIImage(named: "placeholder")
             cell.activityIndicator.startAnimating()
@@ -143,6 +144,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                         cell.photoImageView.image = image
                         cell.activityIndicator.stopAnimating()
                         cell.activityIndicator.hidden = true
+                        self.updateButtonStatus()
                     }
                 }
             }
@@ -156,11 +158,13 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PhotoCollectionViewCell
-        
-        let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
-        sharedContext.deleteObject(photo)
-        CoreDataStackManager.sharedInstance().saveContext()
+        if (canDeleteImages) {
+            let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PhotoCollectionViewCell
+            
+            let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+            sharedContext.deleteObject(photo)
+            CoreDataStackManager.sharedInstance().saveContext()
+        }
         
     }
     
@@ -238,6 +242,9 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
     
     func getNewCollection() {
         
+        collectionActionButton.enabled = false
+        self.canDeleteImages = false
+        
         let fetchRequest = NSFetchRequest(entityName: "Meta")
         let predicate = NSPredicate(format: "location == %@", self.pin)
         fetchRequest.predicate = predicate
@@ -280,7 +287,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
                     
                     if totalPhotosVal > 0 {
                         if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
-                            for index in 0...photosArray.count-1 {
+                            for index in 0...photosArray.count - 1 {
                                 
                                 let photoDictionary = photosArray[index] as [String: AnyObject]
                                 
@@ -315,6 +322,21 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         for photo in fetchedResultsController.fetchedObjects as! [Photo] {
             sharedContext.deleteObject(photo)
         }
+    }
+    
+    func updateButtonStatus() {
+        
+        let photos = fetchedResultsController.fetchedObjects as! [Photo]
+        
+        for photo in photos {
+            if photo.image == nil {
+                self.collectionActionButton.enabled = false
+                return
+            }
+        }
+        
+        self.collectionActionButton.enabled = true
+        self.canDeleteImages = true
     }
     
     @IBAction func bottomButtonAction(sender: AnyObject) {

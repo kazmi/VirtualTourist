@@ -259,8 +259,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDataSource, UI
         var randomPageVal: Int? = nil
         if let _ = result {
             let totalPagesVal = result!.totalPages
-            let randomPageVal = 1 + Int(arc4random_uniform(UInt32(totalPagesVal.intValue)))
-            println("loading page: \(randomPageVal) out of \(totalPagesVal)")
+            randomPageVal = 1 + Int(arc4random_uniform(UInt32(totalPagesVal.intValue)))
         }
         
         FlickrClient.sharedInstance().getPhotosWithCompletionHandler(pin.latitude, longitude: pin.longitude,

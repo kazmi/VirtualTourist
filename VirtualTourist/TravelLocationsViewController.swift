@@ -292,7 +292,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         
         // Check for Errors
         if error != nil {
-            println("Error in fectchAllActors(): \(error)")
+            println("Error in fectchAllPins(): \(error)")
         }
         
         return results as! [Pin]
